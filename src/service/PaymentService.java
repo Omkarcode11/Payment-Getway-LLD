@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.UUID;
 import models.Payment;
 import processor.*;
-import repository.PaymentRepository;
 import repository.Repository;
 
 public class PaymentService {
@@ -13,9 +12,9 @@ public class PaymentService {
     private final Map<PaymentMethod, PaymentProcessor> processorMap;
     private final Repository paymentRepository;
 
-    public PaymentService(Map<PaymentMethod, PaymentProcessor> processMap, PaymentRepository paymentRepository){
+    public PaymentService(Map<PaymentMethod, PaymentProcessor> processMap, Repository paymentRepository2){
         this.processorMap = processMap;
-        this.paymentRepository = paymentRepository;
+        this.paymentRepository = paymentRepository2;
     }
 
     public Payment createPayment(double amount, PaymentMethod method){
