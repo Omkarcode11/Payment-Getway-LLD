@@ -2,7 +2,7 @@ package repository;
 
 import models.Payment;
 
-public class PaymentRepository {
+public class PaymentRepository implements Repository {
     public void save(Payment payment){
         
     }
@@ -12,6 +12,6 @@ public class PaymentRepository {
     }
 
     public void update(Payment payment){
-        
+
     }
 }

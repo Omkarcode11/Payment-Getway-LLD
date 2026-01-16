@@ -6,11 +6,12 @@ import java.util.UUID;
 import models.Payment;
 import processor.*;
 import repository.PaymentRepository;
+import repository.Repository;
 
 public class PaymentService {
 
     private final Map<PaymentMethod, PaymentProcessor> processorMap;
-    private final PaymentRepository paymentRepository;
+    private final Repository paymentRepository;
 
     public PaymentService(Map<PaymentMethod, PaymentProcessor> processMap, PaymentRepository paymentRepository){
         this.processorMap = processMap;
@@ -37,5 +38,9 @@ public class PaymentService {
 
         processor.process(payment);
         paymentRepository.update(payment);
+    }
+
+    public Payment getPaymentStatus(String paymentId){
+        return paymentRepository.getById(paymentId);
     }
 }
