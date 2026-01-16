@@ -6,6 +6,8 @@ import models.Payment;
 import processor.CardPaymentProcessor;
 import processor.PaymentProcessor;
 import processor.UPIPaymentProcessor;
+import repository.IdempotencyRepository;
+import repository.InMemoryIdempotencyRepository;
 import repository.InMemoryPaymentRepository;
 import repository.Repository;
 import service.PaymentService;
@@ -16,18 +18,20 @@ public class Main {
 
         // 1. Repository
         Repository paymentRepository = new InMemoryPaymentRepository();
+        IdempotencyRepository idempotencyRepository = new InMemoryIdempotencyRepository();
 
         // 2. Processors
         Map<PaymentMethod, PaymentProcessor> processorMap = new HashMap<>();
+
         processorMap.put(PaymentMethod.CARD, new CardPaymentProcessor());
         processorMap.put(PaymentMethod.UPI, new UPIPaymentProcessor());
 
         // 3. Service
         PaymentService paymentService
-                = new PaymentService(processorMap, paymentRepository);
+                = new PaymentService(processorMap, paymentRepository,idempotencyRepository);
 
         // 4. Create payment
-        models.Payment payment = paymentService.createPayment(1000.0, PaymentMethod.CARD);
+        Payment payment = paymentService.createPayment(1000.0, PaymentMethod.CARD,"asfsdf");
         System.out.println("Payment Created: " + payment.getPaymentId());
 
         // 5. Process payment
