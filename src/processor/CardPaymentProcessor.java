@@ -1,19 +1,13 @@
 package processor;
 
-import enums.PaymentStatus;
 import models.Payment;
 
 public class CardPaymentProcessor implements PaymentProcessor {
+
+    private final AsyncPaymentExecutor executor = new AsyncPaymentExecutor();
     
     public void process(Payment payment){
-
-        // Simulate bank call
-
-        payment.updateStatus(PaymentStatus.PROCESSING);
-
-
-        // Assume success for now 
-
-        payment.updateStatus(PaymentStatus.SUCCESS);
+        System.err.println("Submitting Card payment async");
+        executor.execute(payment);
     }
 }
